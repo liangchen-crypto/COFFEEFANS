@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENCIK Fans - DAO Governance</title>
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dao-app">
+        <!-- 头部用户和资产信息 -->
+        <header class="dao-header">
+            <div class="user-meta glass-card">
+                <div id="user-rank-icon" class="rank-icon"></div> 
+                <div class="meta-info">
+                    <span class="status-pill">身份已上链 🛡️</span>
+                    <div class="rank-row">
+                        <span class="id-text">RANK: <span id="rank-name">南洋信徒</span></span>
+                        <button class="info-btn" onclick="toggleRankModal()">规则 ⓘ</button>
+                    </div>
+                </div>
+            </div>
+            <div class="vp-display glass-card">
+                <small>治理权重 (Voting Power)</small>
+                <div class="vp-value"><span id="my-vp">2,450</span> <span class="unit">VP</span></div>
+                <div class="verified-total">
+                    累计消费确权: <span id="total-verified">0</span> <span class="unit">PTS</span>
+                </div>
+            </div>
+            
+            <button class="scan-btn hover-pop" onclick="startSimulatedScan()">
+                <span class="icon">📷</span> 扫描包装二维码核销订单
+            </button>
+        </header>
+
+        <!-- 导航栏 -->
+        <nav class="dao-nav">
+            <button class="tab-btn active" onclick="showSection('referral')">裂变</button>
+            <button class="tab-btn" onclick="showSection('governance')">决策</button>
+            <button class="tab-btn" onclick="showSection('mint')">日志</button>
+        </nav>
+
+        <!-- 内容区域 -->
+        <main class="dao-content">
+            <!-- 裂变 Section -->
+            <section id="referral" class="dao-section active">
+                <div class="glass-card mb-4">
+                    <h4>专属分享码</h4>
+                    <div class="invite-code-wrap">
+                        <code id="code-text" class="glow-text">SG-GUAN-8821</code>
+                        <button onclick="copyInvite()" class="btn-copy">复制</button>
+                    </div>
+                </div>
+                
+                <div class="purchase-history glass-card">
+                    <h4>消费溯源 (订单关联)</h4>
+                    <div id="order-history-list">
+                        <!-- JS 动态生成订单内容 -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 决策 Section -->
+            <section id="governance" class="dao-section">
+                <div class="proposal-card glass-card">
+                    <div class="p-header">
+                        <span class="p-id">#009</span>
+                        <span class="status-pill status-active">进行中</span>
+                    </div>
+                    <h4>优化水源二叔物流响应</h4>
+                    <p class="text-muted">通过 DAO 投票干预生产线，消除中间商造成的延迟。</p>
+                    <div class="vote-bar-wrap">
+                        <div class="vote-bar-bg">
+                            <div class="vote-bar-fill" id="vote-progress" style="width: 72%;"></div>
+                        </div>
+                        <div class="vote-info"><span>支持率 <span id="vote-percent">72</span>%</span></div>
+                    </div>
+                    <div class="vote-btns">
+                        <button onclick="castVote(true)" class="btn-vote-up hover-pop">✅ 支持</button>
+                        <button onclick="castVote(false)" class="btn-vote-down hover-pop">❌ 反对</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 日志 Section -->
+            <section id="mint" class="dao-section">
+                <div class="terminal-wrap glass-card">
+                    <div class="terminal-header">_CHAIN_DATA_FLOW</div>
+                    <div id="mint-log" class="terminal-body">
+                        <!-- JS 动态生成控制台日志内容 -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 弹窗：防伪核销 -->
+        <div id="scan-modal" class="modal-overlay">
+            <div class="modal-content glass-card">
+                <h3>包装身份验证</h3>
+                <div id="scan-view" class="scan-preview">
+                    <div class="scan-line"></div>
+                    <p class="scan-text">正在验证水源二叔唯一防伪码...</p>
+                </div>
+                <div id="phone-input-area" style="display:none; margin-top:15px;">
+                    <input type="tel" id="user-phone" placeholder="输入关联手机号" maxlength="11">
+                    <button class="confirm-btn hover-pop" onclick="processValidation()">确认核销并同步</button>
+                </div>
+                <button class="close-btn" onclick="closeScan()">取消</button>
+            </div>
+        </div>
+
+        <!-- 弹窗：DAO 治理等级 -->
+        <div id="rank-modal" class="modal-overlay" onclick="toggleRankModal()">
+            <div class="modal-content glass-card" onclick="event.stopPropagation()">
+                <h3>DAO 治理等级</h3>
+                <div id="rank-list-container">
+                    <!-- JS 动态生成排名内容 -->
+                </div>
+                <button class="close-btn mt-2" onclick="toggleRankModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 业务逻辑 -->
+    <script src="script.js"></script>
+</body>
+</html>
