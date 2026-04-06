@@ -82,9 +82,9 @@ const SVG_ELDER = `
 `;
 
 const ranksDef = [
-    { name: '南洋信徒', reqVP: 0, reqStr: '0 VP', svg: SVG_BELIEVER, color: '#10b981' },
-    { name: '狮城守卫', reqVP: 2000, reqStr: '2,000 VP', svg: SVG_GUARDIAN, color: '#3b82f6' },
-    { name: '治理元老', reqVP: 10000, reqStr: '10,000 VP', svg: SVG_ELDER, color: '#fbbf24' }
+    { name: '南洋信徒', reqVP: 0, reqStr: '0 VP', svg: SVG_BELIEVER, color: '#10b981', desc: '设计语言：一杯拉花咖啡升腾着代表生机的蒸气，通体萦绕着翠绿色 (Emerald) 的霓虹光效。代表品牌的初识与溯源。' },
+    { name: '狮城守卫', reqVP: 2000, reqStr: '2,000 VP', svg: SVG_GUARDIAN, color: '#3b82f6', desc: '设计语言：一面流线型的坚固盾牌，中心镶嵌着抽象的核心阵列，通体散发着蔚蓝色 (Blue) 的科技辉光。代表中坚用户的参与和守护。' },
+    { name: '治理元老', reqVP: 10000, reqStr: '10,000 VP', svg: SVG_ELDER, color: '#fbbf24', desc: '设计语言：一顶象征着绝对权力的几何皇冠，底座有象征去中心化网络的重要节点分布，通体爆发出耀眼的琥珀金色 (Amber / Gold)。代表社区里最高的话语权与 DAO 的规则制定者。' }
 ];
 
 // Initialization
@@ -115,11 +115,11 @@ function updateDisplay() {
     const rankNameEl = document.getElementById('rank-name');
     rankNameEl.innerText = rank.name;
     rankNameEl.style.color = rank.color;
-    rankNameEl.style.textShadow = \`0 0 8px \${rank.color}80\`;
+    rankNameEl.style.textShadow = `0 0 8px ${rank.color}80`;
     
     const iconContainer = document.getElementById('user-rank-icon');
     iconContainer.innerHTML = rank.svg;
-    iconContainer.style.boxShadow = \`0 0 20px \${rank.color}40\`;
+    iconContainer.style.boxShadow = `0 0 20px ${rank.color}40`;
 }
 
 function showSection(sectionId) {
@@ -166,8 +166,8 @@ function castVote(isSupport) {
     document.getElementById('vote-progress').style.width = state.votePercent + '%';
     document.getElementById('vote-percent').innerText = state.votePercent;
     
-    addLog(\`Voted on Proposal #009: \${isSupport ? 'SUPPORT' : 'AGAINST'}, Weights: \${state.vp} VP\`);
-    alert(\`投票成功！您已投入 \${state.vp} VP 权重。\`);
+    addLog(`Voted on Proposal #009: ${isSupport ? 'SUPPORT' : 'AGAINST'}, Weights: ${state.vp} VP`);
+    alert(`投票成功！您已投入 ${state.vp} VP 权重。`);
 }
 
 // Modal Logic
@@ -195,10 +195,10 @@ function closeScan() {
     document.getElementById('scan-modal').classList.remove('active');
     // Reset scan UI state
     setTimeout(() => {
-        document.getElementById('scan-view').innerHTML = \`
+        document.getElementById('scan-view').innerHTML = `
             <div class="scan-line"></div>
             <p class="scan-text">正在验证水源二叔唯一防伪码...</p>
-        \`;
+        `;
         document.getElementById('phone-input-area').style.display = 'none';
         document.getElementById('user-phone').value = '';
     }, 300);
@@ -224,10 +224,10 @@ function processValidation() {
         updateDisplay();
         renderRanks(); // Re-render rank list in case of level up
         
-        addLog(\`Item verified [Phone: \${phone.slice(0,3)}****\${phone.slice(-4)}]. +\${bonusPts} VP Minted.\`);
+        addLog(`Item verified [Phone: ${phone.slice(0,3)}****${phone.slice(-4)}]. +${bonusPts} VP Minted.`);
         
         orders.unshift({
-            id: \`ORD-2026-\${Math.floor(Math.random()*900+100)}\`,
+            id: `ORD-2026-${Math.floor(Math.random()*900+100)}`,
             date: new Date().toISOString().split('T')[0],
             item: '水源二叔甄选咖啡豆',
             pts: bonusPts
@@ -235,7 +235,7 @@ function processValidation() {
         renderOrders();
         
         closeScan();
-        alert(\`核销成功！您的积分增加了 \${bonusPts} VP。\`);
+        alert(`核销成功！您的积分增加了 ${bonusPts} VP。`);
         btn.innerText = "确认核销并同步";
     }, 1500);
 }
@@ -243,25 +243,25 @@ function processValidation() {
 // Render Functions
 function renderOrders() {
     const container = document.getElementById('order-history-list');
-    container.innerHTML = orders.map(o => \`
+    container.innerHTML = orders.map(o => `
         <div class="history-item hover-pop">
             <div>
-                <div style="font-weight:600; color:var(--text-main)">\${o.item}</div>
-                <div style="font-size:11px; color:var(--text-muted)">\${o.date} | \${o.id}</div>
+                <div style="font-weight:600; color:var(--text-main)">${o.item}</div>
+                <div style="font-size:11px; color:var(--text-muted)">${o.date} | ${o.id}</div>
             </div>
-            <div style="color:var(--accent); font-weight:600;">+\${o.pts} PTS</div>
+            <div style="color:var(--accent); font-weight:600;">+${o.pts} PTS</div>
         </div>
-    \`).join('');
+    `).join('');
 }
 
 function renderLogs() {
     const container = document.getElementById('mint-log');
-    container.innerHTML = logs.map(l => \`
+    container.innerHTML = logs.map(l => `
         <div class="log-entry">
-            <span class="time">[\${l.time}]</span>
-            <span class="msg">\${l.msg}</span>
+            <span class="time">[${l.time}]</span>
+            <span class="msg">${l.msg}</span>
         </div>
-    \`).join('');
+    `).join('');
 }
 
 function renderRanks() {
@@ -269,15 +269,20 @@ function renderRanks() {
     const container = document.getElementById('rank-list-container');
     container.innerHTML = ranksDef.map(r => {
         const isCurrent = (r.name === currentRank.name);
-        return \`
-        <div class="rank-item \${isCurrent ? 'active-rank' : ''} hover-pop" style="\${isCurrent ? \`border-color: \${r.color}; box-shadow: 0 0 10px \${r.color}40;\` : ''}">
-            <div style="display:flex; align-items:center; gap:12px;">
-                <div style="width:24px; height:24px; display:flex;">\${r.svg}</div>
-                <span style="font-weight: \${isCurrent ? 'bold' : 'normal'}">\${r.name} \${isCurrent ? '✅' : ''}</span>
+        return `
+        <div class="rank-item ${isCurrent ? 'active-rank' : ''} hover-pop" style="display:flex; flex-direction:column; align-items:stretch; gap:8px; ${isCurrent ? `border-color: ${r.color}; box-shadow: 0 0 10px ${r.color}40;` : ''}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:24px; height:24px; display:flex;">${r.svg}</div>
+                    <span style="font-weight: ${isCurrent ? 'bold' : 'normal'}">${r.name} ${isCurrent ? '✅' : ''}</span>
+                </div>
+                <span style="color:${r.color}; font-weight:bold;">${r.reqStr}</span>
             </div>
-            <span style="color:\${r.color}; font-weight:bold;">\${r.reqStr}</span>
+            <div style="font-size:12px; color:var(--text-muted); text-align:left; line-height:1.5; border-top:1px dashed rgba(255,255,255,0.1); padding-top:8px;">
+                ${r.desc}
+            </div>
         </div>
-        \`;
+        `;
     }).join('');
 }
 
